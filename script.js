@@ -4,10 +4,10 @@ const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
 const categoryButtons = document.querySelectorAll(".category-btn");
 
-// Load default news
+// Load default news when the page loads
 window.addEventListener("load", () => fetchTopHeadlines("general"));
 
-// Search
+// 🔹 Search functionality
 searchBtn.addEventListener("click", () => {
   const query = searchInput.value.trim();
   if (query) fetchNewsByQuery(query);
@@ -20,7 +20,7 @@ searchInput.addEventListener("keypress", (e) => {
   }
 });
 
-// Categories
+// 🔹 Category button click
 categoryButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     categoryButtons.forEach((b) => b.classList.remove("active"));
@@ -29,35 +29,39 @@ categoryButtons.forEach((btn) => {
   });
 });
 
-// Fetch top headlines (by category)
+// 🔹 Fetch top headlines (category-wise)
 async function fetchTopHeadlines(category = "general") {
-  const url = `https://gnews.io/api/v4/top-headlines?category=${category}&lang=en&country=in&max=10&apikey=${API_KEY}`;
+  const originalUrl = `https://gnews.io/api/v4/top-headlines?category=${category}&lang=en&country=in&max=10&apikey=${API_KEY}`;
+  const url = `https://api.allorigins.win/get?url=${encodeURIComponent(originalUrl)}`;
   try {
     const res = await fetch(url);
-    const data = await res.json();
+    const wrappedData = await res.json();
+    const data = JSON.parse(wrappedData.contents);
     displayNews(data.articles);
   } catch (error) {
-    showError("Error loading news. Try again later.");
+    showError("Error loading news. Please try again later.");
   }
 }
 
-// Fetch by search query
+// 🔹 Fetch news by search query
 async function fetchNewsByQuery(query) {
-  const url = `https://gnews.io/api/v4/search?q=${query}&lang=en&country=in&max=10&apikey=${API_KEY}`;
+  const originalUrl = `https://gnews.io/api/v4/search?q=${query}&lang=en&country=in&max=10&apikey=${API_KEY}`;
+  const url = `https://api.allorigins.win/get?url=${encodeURIComponent(originalUrl)}`;
   try {
     const res = await fetch(url);
-    const data = await res.json();
+    const wrappedData = await res.json();
+    const data = JSON.parse(wrappedData.contents);
     displayNews(data.articles);
   } catch (error) {
     showError("Error fetching search results.");
   }
 }
 
-// Display articles
+// 🔹 Display fetched articles
 function displayNews(articles) {
   newsContainer.innerHTML = "";
   if (!articles || articles.length === 0) {
-    showError("No news articles found. Try a different topic.");
+    showError("No news articles found. Try another topic.");
     return;
   }
 
@@ -76,8 +80,8 @@ function displayNews(articles) {
   });
 }
 
-// Error message
+// 🔹 Error message function
 function showError(message) {
-  newsContainer.innerHTML = `<p style="text-align:center;color:#555;">${message}</p>`;
+  newsContainer.innerHTML = `<p style="text-align:center; color:#555; font-size:1rem;">${message}</p>`;
 }
 
