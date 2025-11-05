@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🗞️ Global News Hub</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search latest news..." />
+      <button id="searchBtn">Search</button>
+    </div>
+    <nav id="categories">
+      <button class="category-btn active" data-category="general">All</button>
+      <button class="category-btn" data-category="business">Business</button>
+      <button class="category-btn" data-category="sports">Sports</button>
+      <button class="category-btn" data-category="technology">Technology</button>
+      <button class="category-btn" data-category="entertainment">Entertainment</button>
+      <button class="category-btn" data-category="health">Health</button>
+      <button class="category-btn" data-category="science">Science</button>
+    </nav>
+  </header>
+
+  <main id="newsContainer"></main>
+
+  <footer>
+    <p>Made with ❤️ by Surabhi K N</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
